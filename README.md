@@ -29,3 +29,11 @@ Vue.component('foo', {
 });
 var vm = new Vue();
 ```
+
+###canvas_downsample.vue
+
+图片canvas降维的vue组件
+
+:image指定图片链接，:max-width指定最大宽度，:max-height指定最大高度
+
+最大宽度优先生效
