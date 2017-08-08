@@ -1,9 +1,9 @@
-function _init(target, swipeCallback, moveCallback, touchCallback, endCallback, tapCallback){
+function _init(target, swipeCallback, moveCallback, touchCallback, endCallback, tapCallback, _moveThreshold){
   target.addEventListener('touchstart', handleTouchStart, {passive: false});        
   target.addEventListener('touchmove', handleTouchMove, {passive: false});      
   target.addEventListener('touchend', handleTouchEnd, {passive: false});
 
-  var moveThreshold = 0.2*window.innerWidth;
+  var moveThreshold = _moveThreshold || 0.2*window.innerWidth;
   var tapThreshold = 15;
   var xDown = null;                                                        
   var yDown = null;           
@@ -35,13 +35,13 @@ function _init(target, swipeCallback, moveCallback, touchCallback, endCallback, 
     evt.preventDefault();         
     if ( xDown || yDown ) {
       return;
-    }                                  
+    }
     xDown = evt.touches[0].clientX;                                      
     yDown = evt.touches[0].clientY;        
     xPrev = xDown;
     yPrev = yDown;    
     time = Date.now(); 
-    touchCallback();                               
+    touchCallback&&touchCallback();                               
   };                                                
 
   function handleTouchMove(evt) {   
@@ -65,35 +65,38 @@ function _init(target, swipeCallback, moveCallback, touchCallback, endCallback, 
     if ( Math.abs( xMove ) > Math.abs( yMove ) ) {/*most significant*/
       if ( xMove > moveThreshold ) {
         /* left swipe */
-        swipeCallback(0, 'left')   
+        swipeCallback&&swipeCallback(0, 'left')   
         clear();     
       } 
       if ( xMove < -moveThreshold ) {
         /* right swipe */
-        swipeCallback(1, 'right')
+        swipeCallback&&swipeCallback(1, 'right')
         clear();     
       }                       
     } 
     else {
       if ( yMove > moveThreshold ) {
         /* up swipe */ 
-        swipeCallback(2, 'up')
+        swipeCallback&&swipeCallback(2, 'up')
         clear();     
       } 
       if ( yMove < -moveThreshold ) {
         /* down swipe */
-        swipeCallback(3, 'down')
+        swipeCallback&&swipeCallback(3, 'down')
         clear();     
       }                                                                 
     }
-    moveCallback(xDiff, yDiff);          
+    moveCallback&&moveCallback(xDiff, yDiff);          
   }
 
   function handleTouchEnd(evt){
-    endCallback();
+    if(evt.touches.length){
+      return;
+    }
+    endCallback&&endCallback();
     if(Date.now()-time<1000){
       if(!xMove||(xMove&&Math.abs(xMove-xDown)<tapThreshold&&Math.abs(yMove-yDown)<tapThreshold)){
-        tapCallback();
+        tapCallback&&tapCallback();
       }
     }
     clear();

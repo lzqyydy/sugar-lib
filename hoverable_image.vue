@@ -1,9 +1,7 @@
 <template>
-  <!-- <div @mouseenter="enter" @mouseout.self="leave">
-    <img @mouseenter.stop="block" :src="src" :class="{bigger: hovered}">
-  </div> -->
-  <div>
+  <div id="root">
     <img :src="src" :class="{bigger: hovered}">
+    <div class="mask" @mouseenter="enter" @mouseout.self="leave"></div>
   </div>
 </template>
 
@@ -32,26 +30,29 @@ export default {
   watch: {
   },
   mounted (){
-    this.$el.addEventListener('mouseenter', this.enter, false);
-    this.$el.addEventListener('mouseleave', this.leave, false);
   }
 }
 </script>
 
 <style type="stylus" scoped>
-div{
-  position: relative;
-  display: inline-block;
-  z-index: 10;
-  background-color: #ccc;
+#root{
+  position:relative;
+}
+.mask{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 img{
-  position: relative;
-  width: 120%;
-  height: 120%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   transition: all .2s ease-out;
   box-shadow: 3px 3px 3px #ccc;
-  z-index: -1;
 }
 .bigger{
   transform: scale(2);
