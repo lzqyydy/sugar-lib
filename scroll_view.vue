@@ -61,9 +61,6 @@ export default {
     }
   },
   mounted (){
-    // setInterval(() => {
-    //   this.offsetY = 1000 - this.offsetY;
-    // }, 5000);
     this.swipe_init(this.$el.children[0], this.touchHandler, this.moveHandler, this.endHandler, null, null, 1000);
   }
 }
