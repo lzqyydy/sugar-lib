@@ -1,3 +1,9 @@
+// Array.apply(null, { length: 136 }).map(function(value, index){
+//   return index;
+// })
+
+
+
 function clip(value, min, max){
   if(value < min){
     return min;
@@ -56,4 +62,18 @@ var shuffle = function (array) {
 
   return array;
 }
-export { clip, randomColor, isOverlapCircle, shuffle };
+
+var findClosest = function(arr, v){
+  var r;
+  var diff = Number.MAX_SAFE_INTEGER;
+
+  for(var i=0;i<arr.length;i++){
+    if(Math.abs(arr[i]-v)<diff){
+      r = i;
+      diff = Math.abs(arr[i]-v);
+    }
+  }
+  return arr[r];
+}
+
+export { clip, randomColor, isOverlapCircle, shuffle, findClosest };
