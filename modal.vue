@@ -71,6 +71,8 @@ export default {
 }
 .modal-body > * {
   max-width: 100%;
+  display: block;
+  margin: 0 auto;
 }
 .modal-footer > * {
   display: inline-block;
