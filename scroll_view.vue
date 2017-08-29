@@ -1,6 +1,6 @@
 <template>
   <div class="scrollView">
-    <div class="scrollContainer" :class="{vertical: vertical, horizontal: !vertical, smoothing: smoothing}" :style="{transform: vertical?'translateY('+ -offsetY +'px)':'translateX('+ -offsetX +'px)'}">
+    <div class="scrollContainer" @touchstart="_handleStart" @touchmove="_handleMove" @touchend="_handleEnd" @touchcancel="_handleEnd" @mousedown="_handleStart" @mousemove="_handleMove" @mouseup="_handleEnd" @mouseleave="_handleEnd" :class="{vertical: vertical, horizontal: !vertical, smoothing: smoothing}" :style="{transform: vertical?'translateY('+ -offsetY +'px)':'translateX('+ -offsetX +'px)'}">
       <slot></slot>
     </div>
   </div>
@@ -8,7 +8,7 @@
 
 <script>
 import {clip, findClosest} from './util.js'
-import {swipe_vue_mixin} from './swipe.js';
+import swipe_vue from './swipe_vue.js';
 
 export default {
   data (){
@@ -18,21 +18,23 @@ export default {
       smoothing: false
     }
   },
-  mixins: [swipe_vue_mixin],
+  mixins: [swipe_vue],
   props: ['vertical', 'slots'],
   methods: {
-    touchHandler: function(){
+    touchCallback: function(){
       this.smoothing = false;
+      //root bounding client
       var rbc = this.$el.getBoundingClientRect();
+      //container bounding client
       var cbc = this.$el.children[0].getBoundingClientRect();
       if(this.vertical){
         this.offsetY = rbc.top-cbc.top;
       }
       else{
-        this.offsetY = rbc.left-cbc.left;
+        this.offsetX = rbc.left-cbc.left;
       }
     },
-    moveHandler: function(dx, dy){
+    moveCallback: function(dx, dy){
       var rbc = this.$el.getBoundingClientRect();
       var cbc = this.$el.children[0].getBoundingClientRect();
       if(this.vertical){
@@ -44,7 +46,7 @@ export default {
         this.offsetX = clip(this.offsetX, 0, cbc.width-rbc.right+rbc.left);
       }
     },
-    endHandler: function(vx, vy){
+    endCallback: function(vx, vy){
       if(vx!==0||vy!==0){
         var rbc = this.$el.getBoundingClientRect();
         var cbc = this.$el.children[0].getBoundingClientRect();
@@ -65,9 +67,6 @@ export default {
         }
       }
     }
-  },
-  mounted (){
-    this.swipe_init(this.$el.children[0], this.touchHandler, this.moveHandler, this.endHandler, null, null, 1000);
   }
 }
 </script>
@@ -78,6 +77,7 @@ export default {
   max-height: 100vh;
   white-space: nowrap;
   overflow: hidden;
+  display: inline-block;
 }
 .scrollContainer.smoothing{
   transition: 1.2s transform ease-out;
