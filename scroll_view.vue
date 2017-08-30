@@ -9,7 +9,6 @@
 <script>
 import {clip, findClosest} from './util.js'
 import swipe_vue from './swipe_vue.js';
-
 export default {
   data (){
     return {
@@ -79,6 +78,10 @@ export default {
   overflow: hidden;
   display: inline-block;
 }
+/*.scrollContainer{
+  max-width: initial;
+  max-height: initial;
+}*/
 .scrollContainer.smoothing{
   transition: 1.2s transform ease-out;
 }

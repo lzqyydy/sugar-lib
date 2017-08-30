@@ -121,5 +121,10 @@ export default {
       }
       this._swipeClear();
     }
+  },
+  mounted() {
+    this.$on('mousemove',  function(){
+      console.log(1);
+    })
   }
 }
