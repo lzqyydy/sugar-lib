@@ -1,6 +1,6 @@
 <template>
-  <div :class="{'folder': !inline, 'folder-inline': inline}">
-    <div :class="{'collapsed': collapse}" @mousedown="op" @touchstart="op">{{name}}</div>
+  <div class="folder">
+    <div class="folder-hint" :class="{'folder-collapsed': collapse}" @mousedown="op" @touchstart="op">{{name}}</div>
     <slot></slot>
   </div>
 </template>
@@ -12,7 +12,7 @@ export default {
       collapse: true
     };
   },
-  props: ['inline', 'name'],
+  props: ['name'],
   methods: {
     op(){
       this.collapse = !this.collapse
@@ -24,7 +24,12 @@ export default {
 </script>
 
 <style scoped>
-.collapsed ~ *{
+.folder-hint{
+  width: 50%;
+  background-color: #ccc;
+  /*background: #F8BB44;*/
+}
+.folder-collapsed ~ *{
   transition: height 0.5s ease-out;
   height: 0;
   overflow: hidden;
