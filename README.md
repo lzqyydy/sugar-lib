@@ -1,6 +1,6 @@
-##Libs for self-use
+## Libs for self-use
 
-###swipe.js
+### swipe.js
 
 触摸操作模块
 会输出滑动（四方向），点击，释放，拖动，轻触5个操作
@@ -30,10 +30,18 @@ Vue.component('foo', {
 var vm = new Vue();
 ```
 
-###canvas_downsample.vue
+### canvas_downsample.vue
 
 图片canvas降维的vue组件
 
 :image指定图片链接，:max-width指定最大宽度，:max-height指定最大高度
 
 最大宽度优先生效
+
+### hoverable_image.vue
+
+粗糙
+
+传入图片url和尺寸
+
+鼠标滑过就会变大
