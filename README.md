@@ -45,3 +45,7 @@ var vm = new Vue();
 传入图片url和尺寸
 
 鼠标滑过就会变大
+
+### modal.vue
+
+从vuejs.org的example里抠出来的modal组件
