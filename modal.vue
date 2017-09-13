@@ -20,7 +20,7 @@
           <slot name="footer">
             default footer
           </slot>
-          <button class="modal-default-button" @click="$emit('close')">OK</button>
+          <button class="modal-default-button" @click="handle" :disabled="disabled">OK</button>
         </div>
 
       </div>
@@ -32,7 +32,17 @@
 <script>
 // copied from offital Vue examples
 export default {
-
+  data(){
+    return {
+      disabled: false
+    }
+  },
+  methods: {
+    handle(){
+      this.$emit('close');
+      this.disabled = true;
+    }
+  }
 }
 </script>
 
@@ -45,16 +55,15 @@ export default {
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, .5);
-  display: table;
+  display: flex;
+  justify-content: space-around;
   transition: opacity .3s ease;
 }
 .modal-wrapper {
-  display: table-cell;
-  vertical-align: middle;
+  display: flex;
+  align-self: center;
 }
 .modal-container {
-  width: 300px;
-  margin: 0px auto;
   padding: 20px 30px;
   background-color: #fff;
   border-radius: 2px;
