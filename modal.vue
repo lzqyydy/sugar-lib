@@ -20,7 +20,7 @@
           <slot name="footer">
             default footer
           </slot>
-          <button class="modal-default-button" @click="handle" :disabled="disabled">OK</button>
+          <slot name="button"><button class="modal-default-button" @click="handle" :disabled="disabled">OK</button></slot>
         </div>
 
       </div>
@@ -89,6 +89,14 @@ export default {
 .modal-default-button {
   float: right;
 }
+.modal-body label{
+  display: flex;
+  justify-content: space-between;
+}
+.modal-body input{
+  width: 60%;
+}
+
 /*
  * The following styles are auto-applied to elements with
  * transition="modal" when their visibility is toggled
